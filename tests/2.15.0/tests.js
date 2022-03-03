@@ -1,9 +1,9 @@
 let testUtils = {
     fetchTar: function(filename) { 
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve, _reject) => {
             fetch(filename).then(resp => resp.blob()).then((blob) => {
                 let tar = new tarball.TarReader();
-                tar.readFile(blob).then((fileInfo) => {
+                tar.readFile(blob).then((_fileInfo) => {
                     resolve(tar);
                 });
             });
@@ -11,7 +11,7 @@ let testUtils = {
     },
     generateTar: function(download) {
         // generate a tarball and read it back
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve, _reject) => {
             let tarWriter = new tarball.TarWriter();
             tarWriter.addFolder("myfolder/");
             tarWriter.addTextFile("myfolder/first.txt", "this is some text");
@@ -29,7 +29,7 @@ let testUtils = {
                     tarWriter.write().then((tarBlob) => {
                         let tarFile = tarBlob;
                         let tarReader = new tarball.TarReader();
-                        tarReader.readFile(tarFile).then((fileInfo) => {
+                        tarReader.readFile(tarFile).then((_fileInfo) => {
                             resolve(tarReader);
                         });
                     });
@@ -79,7 +79,7 @@ QUnit.test( "Check image file contents", function( assert ) {
         let imageBlob = tar.getFileBlob("simple/tux.png", "image/png");
         let imageURL = URL.createObjectURL(imageBlob);
         let image = new Image();
-        image.onload = (event) => {
+        image.onload = (_event) => {
             assert.equal(image.width, 265, "Image width is ok");
             assert.equal(image.height, 314, "Image height is ok");
             done();
@@ -125,7 +125,7 @@ QUnit.test( "Check image file contents", function( assert ) {
         let imageBlob = tar.getFileBlob("myfolder/tux.png", "image/png");
         let imageURL = URL.createObjectURL(imageBlob);
         let image = new Image();
-        image.onload = (event) => {
+        image.onload = (_event) => {
             assert.equal(image.width, 265, "Image width is ok");
             assert.equal(image.height, 314, "Image height is ok");
             done();
@@ -136,7 +136,7 @@ QUnit.test( "Check image file contents", function( assert ) {
 
 QUnit.test( "Download test", function( assert ) {
     let done = assert.async();
-    testUtils.generateTar(true).then((tar) => {
+    testUtils.generateTar(false).then((_tar) => {
         assert.ok(1, "download test completed, please check tar file manually");
         done();
     });

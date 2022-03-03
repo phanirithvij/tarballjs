@@ -6,7 +6,7 @@ tarball.TarReader = class {
     }
 
     readFile(file) {
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve, _reject) => {
             let reader = new FileReader();
             reader.onload = (event) => {
                 this.buffer = event.target.result;
@@ -19,7 +19,7 @@ tarball.TarReader = class {
     }
 
     readArrayBuffer(arrayBuffer) {
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve, _reject) => {
             this.buffer = arrayBuffer;
             this.fileInfo = [];
             this._readFileInfo();
@@ -212,7 +212,7 @@ tarball.TarWriter = class {
     }
 
     write() {
-        return new Promise((resolve,reject) => {
+        return new Promise((resolve,_reject) => {
             this._createBuffer();
             let offset = 0;
             let filesAdded = 0;
